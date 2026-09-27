@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Exchange</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="appbar">
+  <span class="logo">🔄</span>
+  <div>
+    <h1 id="appbarTitle">Skill Exchange</h1>
+    <p id="appbarSub">Teach what you know, learn what you don't</p>
+  </div>
+  <button id="logoutBtn" class="logout-btn" style="display:none">Logout</button>
+</div>
+
+<!-- AUTH -->
+<div class="screen active" id="screen-auth">
+  <div class="card">
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-form="login">Login</button>
+      <button class="auth-tab" data-form="register">Register</button>
+    </div>
+
+    <form id="loginForm" class="auth-form active">
+      <label>Email<input type="email" id="loginEmail" required placeholder="you@example.com"></label>
+      <label>Password<input type="password" id="loginPassword" required placeholder="Your password"></label>
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <form id="registerForm" class="auth-form">
+      <label>Name<input type="text" id="regName" required placeholder="e.g. Arun Kumar"></label>
+      <label>Email<input type="email" id="regEmail" required placeholder="you@example.com"></label>
+      <label>Password<input type="password" id="regPassword" required placeholder="At least 4 characters"></label>
+      <label>Location<input type="text" id="regLocation" placeholder="e.g. Chennai"></label>
+      <label>Skills you can TEACH (comma separated)<input type="text" id="regSkillsOffered" placeholder="Guitar, Photoshop"></label>
+      <label>Skills you WANT to LEARN (comma separated)<input type="text" id="regSkillsWanted" placeholder="Spoken English, Cooking"></label>
+      <button type="submit" class="btn">Create Account</button>
+    </form>
+
+    <p id="authMsg"></p>
+  </div>
+</div>
+
+<!-- MEMBERS -->
+<div class="screen" id="screen-members">
+  <div class="row"><h2>All Members</h2><button class="btn secondary" id="refreshBtn">↻ Refresh</button></div>
+  <div id="userList"></div>
+</div>
+
+<!-- MATCHES -->
+<div class="screen" id="screen-matches">
+  <div class="card">
+    <h2>Your Matches</h2>
+    <button class="btn" id="matchBtn">🔍 Find My Matches</button>
+  </div>
+  <div id="matchResults"></div>
+</div>
+
+<!-- SESSIONS -->
+<div class="screen" id="screen-sessions">
+  <h2 class="section-title">My Sessions</h2>
+  <div id="sessionList"></div>
+</div>
+
+<!-- PROFILE -->
+<div class="screen" id="screen-profile">
+  <div class="card" id="profileCard"></div>
+</div>
+
+<!-- Book Session Modal -->
+<div class="modal-backdrop" id="bookModal">
+  <div class="modal">
+    <h2>Book a Session</h2>
+    <p id="bookWith"></p>
+    <label>Skill<input type="text" id="bookSkill"></label>
+    <label>Date &amp; Time<input type="datetime-local" id="bookTime"></label>
+    <label>Meeting Link / Phone (optional)<input type="text" id="bookNotes" placeholder="Zoom link or phone number"></label>
+    <div class="modal-actions">
+      <button class="btn secondary" id="bookCancel">Cancel</button>
+      <button class="btn" id="bookConfirm">Book</button>
+    </div>
+  </div>
+</div>
+
+<!-- Review Modal -->
+<div class="modal-backdrop" id="reviewModal">
+  <div class="modal">
+    <h2>Leave a Review</h2>
+    <p id="reviewFor"></p>
+    <label>Rating (1-5)<input type="number" id="reviewRating" min="1" max="5" value="5"></label>
+    <label>Comment<input type="text" id="reviewComment" placeholder="How was the session?"></label>
+    <div class="modal-actions">
+      <button class="btn secondary" id="reviewCancel">Cancel</button>
+      <button class="btn" id="reviewConfirm">Submit</button>
+    </div>
+  </div>
+</div>
+
+<div class="tabbar" id="tabbar" style="display:none">
+  <button class="tab active" data-screen="members" data-title="Members" data-sub="Everyone on the platform"><span class="icon">👥</span><span class="lbl">Members</span></button>
+  <button class="tab" data-screen="matches" data-title="Matches" data-sub="Find your skill swap"><span class="icon">🤝</span><span class="lbl">Matches</span></button>
+  <button class="tab" data-screen="sessions" data-title="Sessions" data-sub="Your bookings"><span class="icon">📅</span><span class="lbl">Sessions</span></button>
+  <button class="tab" data-screen="profile" data-title="Profile" data-sub="Your account"><span class="icon">👤</span><span class="lbl">Profile</span></button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
