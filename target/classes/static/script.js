@@ -252,6 +252,8 @@ async function loadProfile() {
       <p style="color:var(--muted);font-size:13px;margin-top:-8px">${esc(user.email)} ${user.location ? '· ' + esc(user.location) : ''}</p>
       <p><span class="stars">${'★'.repeat(Math.round(rating.average))}${'☆'.repeat(5-Math.round(rating.average))}</span>
          ${rating.average} (${rating.count} review${rating.count===1?'':'s'})</p>
+      ${user.bio ? `<p><strong>Experience:</strong> ${esc(user.bio)}</p>` : ''}
+      ${user.certificatePhoto ? `<img class="cert-photo" src="${user.certificatePhoto}" alt="Certificate">` : ''}
       <p><strong>Teaches:</strong> ${(user.skillsOffered||[]).map(s=>`<span class="tag">${esc(s)}</span>`).join('')||'—'}</p>
       <p><strong>Wants to learn:</strong> ${(user.skillsWanted||[]).map(s=>`<span class="tag want">${esc(s)}</span>`).join('')||'—'}</p>
       <h2 style="margin-top:16px">Reviews Received</h2>
@@ -261,13 +263,50 @@ async function loadProfile() {
           ${r.comment ? esc(r.comment) : '<em>No comment</em>'}
         </div>`).join('') : '<p style="color:var(--muted);font-size:13px">No reviews yet.</p>'}
     `;
+    document.getElementById('editBio').value = user.bio || '';
+    if (user.certificatePhoto) {
+      document.getElementById('certPreview').innerHTML = `<img class="cert-photo" src="${user.certificatePhoto}" alt="Certificate">`;
+    }
   } catch (err) { el.innerHTML = `<p>❌ ${esc(err.message)}</p>`; }
 }
+
+// ---------- EDIT PROFILE ----------
+document.getElementById('editCertFile').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    document.getElementById('certPreview').innerHTML = `<img class="cert-photo" src="${reader.result}" alt="Certificate preview">`;
+    document.getElementById('certPreview').dataset.base64 = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('saveProfileBtn').addEventListener('click', async () => {
+  const msg = document.getElementById('profileSaveMsg');
+  const body = { bio: document.getElementById('editBio').value };
+  const newPhoto = document.getElementById('certPreview').dataset.base64;
+  if (newPhoto) body.certificatePhoto = newPhoto;
+  try {
+    await api('/users/profile', { method: 'PUT', body: JSON.stringify(body) });
+    msg.style.color = '#16a34a';
+    msg.textContent = '✅ Profile updated!';
+    loadProfile();
+  } catch (err) {
+    msg.style.color = '#dc2626';
+    msg.textContent = '❌ ' + err.message;
+  }
+});
 
 // ---------- TAB NAV ----------
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => switchTab(tab.dataset.screen));
 });
+
+// ---------- PWA install support ----------
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
 
 // ---------- INIT ----------
 if (token && currentUser) {

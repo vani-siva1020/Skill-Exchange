@@ -26,6 +26,14 @@ public class User {
 
     private String location;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String bio;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String certificatePhoto; // stored as a base64 data URL
+
     @JsonIgnore
     private String passwordHash;
 
@@ -83,6 +91,22 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getCertificatePhoto() {
+        return certificatePhoto;
+    }
+
+    public void setCertificatePhoto(String certificatePhoto) {
+        this.certificatePhoto = certificatePhoto;
     }
 
     public String getPasswordHash() {

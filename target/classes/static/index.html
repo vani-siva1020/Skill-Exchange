@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skill Exchange</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Exchange</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.svg">
+  <meta name="theme-color" content="#4f46e5">
 </head>
 <body>
 
@@ -69,6 +72,14 @@
 <!-- PROFILE -->
 <div class="screen" id="screen-profile">
   <div class="card" id="profileCard"></div>
+  <div class="card">
+    <h2>Edit Profile</h2>
+    <label>Experience / Bio<input type="text" id="editBio" placeholder="e.g. 3 years teaching guitar"></label>
+    <label>Certificate Photo<input type="file" id="editCertFile" accept="image/*"></label>
+    <div id="certPreview"></div>
+    <button class="btn" id="saveProfileBtn" style="margin-top:8px">Save Profile</button>
+    <p id="profileSaveMsg"></p>
+  </div>
 </div>
 
 <!-- Book Session Modal -->
